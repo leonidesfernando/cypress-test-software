@@ -1,0 +1,28 @@
+{
+  "name": "cypress-test-software",
+  "version": "1.0.0",
+  "description": "Cypress automation project",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "test",
+    "clean": "rimraf dist/*",
+    "build": "npm run clean && tsc"
+  },
+  "keywords": [
+    "test",
+    "cypress",
+    "automation"
+  ],
+  "author": "Leonides Fernando de Oliveira",
+  "license": "MIT",
+  "devDependencies": {
+    "@faker-js/faker": "^7.3.0",
+    "cypress-selectors": "^1.0.2"
+  },
+  "dependencies": {
+    "rimraf": "^3.0.2"
+  }
+}
