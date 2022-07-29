@@ -9,6 +9,7 @@ All tests were built to run against a simple web application in the [teste-softw
 ## Requeriments 
 - [NodeJS](https://nodejs.org/) 16.16.0+
 - [Yarn](https://yarnpkg.com/getting-started) 1.22.19+
+- [Cypress](https://cypress.io) 10.3.1
 
 
 ## Structure
