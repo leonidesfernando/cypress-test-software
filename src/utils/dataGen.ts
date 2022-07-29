@@ -2,7 +2,7 @@ import * as genData from "@faker-js/faker";
 
 export const DataGen = {
   productName(): string {
-    return genData.faker.commerce.product();
+    return `Cypress: ${genData.faker.commerce.product()}`;
   },
 
   strDateCurrentMonth(): string {

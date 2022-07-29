@@ -1,4 +1,4 @@
-import { DataGen } from "../utils/dataGen";
+
 
 import { BySelector, ByXPath, Selector, ById, ByName, By } from 'cypress-selectors';
 
@@ -21,14 +21,14 @@ export class EntryAction {
   @ById('btnSalvar')
   private btnSave!: Selector;
 
+  @ById('cancelar')
+  private btnCancel!: Selector;
+  
   @ById('tipoLancamento1')
   private radioEntry !: Selector;
 
   @ById('tipoLancamento2')
   private radioSpent !: Selector;
-
-  private readonly CATEGORIES: string[] = ['ALIMENTACAO', 'SALARIO', 'LAZER'
-     ,'TELEFONE_INTERNET', 'CARRO', 'EMPRESTIMO', 'INVESTIMENTOS', 'OUTROS']
 
 
   public and(): EntryAction {
@@ -39,19 +39,18 @@ export class EntryAction {
     return this;
   }
 
-  public saveEntry() {
+  public saveEntry(description: string, date: string, value: string, category:string) {
 
-    let description = DataGen.productName();
-    let value = DataGen.moneyValue();
-    let date = DataGen.strDateCurrentMonth();
 
-    let index = DataGen.numberByRange(this.CATEGORIES.length);
-
-    cy.log(description)
-    cy.log(value)
-    cy.log(date)
-    this.fillData(description, date, value, this.CATEGORIES[index]);
+    this.fillData(description, date, value, category);
     this.btnSave.click();
+  }
+
+  public trySaveWithoutDescription(date: string, value: string, category: string){
+
+    this.saveEntry('', date, value, category)
+    cy.get('.alert').should('contain', 'A descrição deve ser informada');
+    this.btnCancel.click();
   }
 
   private fillData(description: string, date: string, value: string, category: string) {
@@ -64,7 +63,8 @@ export class EntryAction {
 
   private fillDescription(description: string) {
     this.inputDescription.clear();
-    this.inputDescription.type(`Cypress - ${description}`);
+    if(description && (description.trim() != ''))
+      this.inputDescription.type(description);
   }
 
 }

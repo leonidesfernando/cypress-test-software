@@ -23,8 +23,6 @@ import './commands'
 Cypress.on('uncaught:exception', (err, runnable) => {
   // returning false here prevents Cypress from
   // failing the test
-  //TODO: Tem que ver o erro e retornar falso só pro erro que dá ao carregar o sistema
-
 
   console.log('erro: ' + err.message)
 
