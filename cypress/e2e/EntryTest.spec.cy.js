@@ -7,7 +7,8 @@ let url = Cypress.config('baseUrl')
 let HOME = "home";
 
 let CATEGORIES = ['ALIMENTACAO', 'SALARIO', 'LAZER'
-  , 'TELEFONE_INTERNET', 'CARRO', 'EMPRESTIMO', 'INVESTIMENTOS', 'OUTROS']
+                  , 'TELEFONE_INTERNET', 'CARRO', 'EMPRESTIMO'
+                  , 'INVESTIMENTOS', 'OUTROS']
 
 
 /*-----------------------------------------------
@@ -25,32 +26,58 @@ function goHome(){
 }
 
 
-
-describe('Open the system', () => {
-
-  it('Access ...: ' + url , () => {
-    goHome()
-  })
+beforeEach(() =>{
+  goHome();
+})
 
 
-  context('Create a new entry and find it', () => {
+describe('Entry CRUD', () => {
+
+
+  context('CRUD - Create a new entry, find and edit, find and remove ', () => {
 
     let date = DataGen.strDateCurrentMonth();
     let description = `${DataGen.productName()} on ${date}`;
     let value = DataGen.moneyValue();
 
     let entryList = new EntryListAction();
-  
-    it('Create valid entry', () => {
-    
-      entryList.newEntry()
-          .and()
-        .saveEntry(description, date, value, getCategory())
-      })
+
+
+    context('Creating a new entry', () => {
+
+      it('Create valid entry', () => {
       
-      it('Finding the entry', () => {
-        entryList.findEntry(description)
+          entryList.newEntry()
+            .and()
+          .saveEntry(description, date, value, getCategory())
+        })
+        
+        it('Finding the entry just added', () => {
+          entryList.findEntry(description)
+      })
     })
+
+    context('Editing and removing the just added: ' + description, () => {
+
+      let editedDescription = description;
+      it('Finding the entry just added', () => {
+        
+        entryList.findEntry(editedDescription);
+
+        editedDescription += ' Edited';
+        entryList.openFirstToEdit()
+          .saveEntry(editedDescription, date, value, getCategory());
+
+        entryList.findEntry(editedDescription)
+      })
+
+      it('Removind the edited entry: ' + editedDescription, () =>{
+
+        entryList.findEntry(editedDescription);
+        entryList.removeFirstEntry(editedDescription);
+      })
+    })
+  
   })
 
 

@@ -10,21 +10,34 @@ export class GridUI{
 
 
   public findItemAt(item: string, line: number, column: number) {
-      expect(this.existsAnyItem()).to.be.true
-      this.mustHaveValueAtCell(line, column, item);
+    this.mustHaveValueAtCell(line, column, item);
+    expect(this.existsAnyItem()).to.be.true
+  }
+
+  public mustNotFindItem(item: string, line:number, column: number){
+    this.getValueAtLine(line, column).filter(`:contains(${item})`).should('have.length', 0)
+    this.mustBeEmpty()
   }
 
   public mustHaveValueAtCell(line: number, column: number, value: string): void {
     this.getValueAtLine(line, column).filter(`:contains(${value})`).should('have.length', 1)
   }
 
+  public getButtonAtByClass(line: number, column: number, btnClass: string): Cypress.Chainable<JQuery<HTMLElement>> {
+    return cy.get(`table${ this.id }.table:first-of-type tbody > tr:nth-of-type(${line}) td a.${btnClass}`);
+  }
+
   protected getValueAtLine(lineIndex: number, column: number): Cypress.Chainable<JQuery<HTMLElement>> {
-    const str = `table${this.id}.table:first-of-type tbody > tr:nth-of-type(${lineIndex}) td:nth-of-type(${column})`
+    const str = this.getLineSelector(lineIndex, column);
     return cy.get(str)
   }
 
+  private getLineSelector(lineIndex: number, column: number): string {
+    return `table${this.id}.table:first-of-type tbody > tr:nth-of-type(${lineIndex}) td:nth-of-type(${column})`;
+  }
+
   protected mustBeEmpty(): void {
-    expect(this.existsAnyItem()).not.to.be.true
+    expect(this.existsAnyItem()).not.to.be.false
   }
 
   private existsAnyItem(): boolean {
