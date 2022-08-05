@@ -1,1 +1,1 @@
-npx cypress run --browser=chrome --spec ./cypress/e2e/EntryTest.spec.cy.js
+npx cypress run --browser=chrome --spec ./cypress/e2e/**/*

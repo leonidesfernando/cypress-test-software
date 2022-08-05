@@ -1,1 +1,1 @@
-yarn build & npx cypress run --browser=chrome --spec ./cypress/e2e/EntryTest.spec.cy.js
+yarn build & npx cypress run --browser=chrome --spec ./cypress/e2e/**/*

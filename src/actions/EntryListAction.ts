@@ -15,12 +15,16 @@ export class EntryListAction{
   private LISTING_PAGE_WAIT = "LISTING_PAGE_WAIT";
   private ENTRY_PAGE_WAIT = "ENTRY_PAGE_WAIT";
   private SEARCH_WAIT = "SEARCH_WAIT";
+  private DASHBOARD = "DASHBOARD";
 
   @ById('novoLancamento')
   private btnNewEntry !: Selector;
 
   @ById('itemBusca')
   private inputSearch !: Selector;
+
+  @BySelector("a[title='Gráfico']")
+  private btnDashboard !: Selector;
 
   public newEntry(): EntryAction{
     cy.intercept('GET', '**/lancamento/').as(this.ENTRY_PAGE_WAIT)
@@ -34,6 +38,13 @@ export class EntryListAction{
     this.searchByDescription(description);
     let grid = this.getGrid();
     grid.findItemAt(description, 1, 1);
+  }
+
+  public goToDashboard(){
+
+    cy.intercept('GET', '**/dashboard').as(this.DASHBOARD)
+    this.btnDashboard.click();
+    cy.wait(`@${this.DASHBOARD}`)
   }
 
   public removeFirstEntry(description: string):void{
