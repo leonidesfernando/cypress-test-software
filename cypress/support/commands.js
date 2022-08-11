@@ -23,3 +23,14 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+let url = Cypress.config('baseUrl')
+let HOME = "home";
+
+Cypress.Commands.add('goHome', () => {
+  
+  cy.intercept('GET', '**/lancamentos/').as(HOME)
+  cy.visit(url)
+  cy.wait(`@${HOME}`, { timeout: 120000 })
+ 
+})

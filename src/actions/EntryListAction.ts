@@ -2,6 +2,7 @@ import { EntryAction } from "./EntryAction";
 
 import { BySelector, ByXPath, Selector, ById, ByName, By } from 'cypress-selectors';
 import { GridUI } from "../components/GridUI";
+import { DashboardAction } from "./DashboardAction";
 
 
 enum Button {
@@ -45,6 +46,8 @@ export class EntryListAction{
     cy.intercept('GET', '**/dashboard').as(this.DASHBOARD)
     this.btnDashboard.click();
     cy.wait(`@${this.DASHBOARD}`)
+    let dashboard = new DashboardAction();
+    dashboard.checkingDashboard();
   }
 
   public removeFirstEntry(description: string):void{

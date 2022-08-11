@@ -22,9 +22,10 @@ export class DashboardAction{
     cy.wait(`@${this.LISTING}`)
   }
 
-  private checkingDashboard(){
+  public checkingDashboard(){
     this.pieChart.should('be.visible');
     this.tableChat.should('be.visible');
+    cy.log('Dashboard checked.')
   }
 
 }

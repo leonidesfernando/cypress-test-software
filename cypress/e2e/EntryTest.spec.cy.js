@@ -3,8 +3,6 @@
 import { EntryListAction } from '../../dist/actions/EntryListAction'
 import { DataGen } from "../../dist/utils/DataGen";
 
-let url = Cypress.config('baseUrl')
-let HOME = "home";
 
 let CATEGORIES = ['ALIMENTACAO', 'SALARIO', 'LAZER'
                   , 'TELEFONE_INTERNET', 'CARRO', 'EMPRESTIMO'
@@ -19,15 +17,9 @@ function getCategory(){
   return CATEGORIES[index];
 }
 
-function goHome(){
-  cy.intercept('GET', '**/lancamentos/').as(HOME)
-  cy.visit(url)
-  cy.wait(`@${HOME}`, { timeout: 120000 })
-}
-
 
 beforeEach(() =>{
-  goHome();
+  cy.goHome();
 })
 
 

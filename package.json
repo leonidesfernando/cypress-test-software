@@ -9,7 +9,8 @@
   "scripts": {
     "test": "test",
     "clean": "rimraf dist/*",
-    "build": "npm run clean && tsc"
+    "build": "npm run clean && tsc",
+    "cy:run": "cypress run"
   },
   "keywords": [
     "test",
@@ -20,9 +21,12 @@
   "license": "MIT",
   "devDependencies": {
     "@faker-js/faker": "^7.3.0",
+    "cypress": "^10.4.0",
     "cypress-selectors": "^1.0.2"
   },
   "dependencies": {
+    "cypress-multi-reporters": "^1.6.1",
+    "cypress-parallel": "^0.9.1",
     "rimraf": "^3.0.2"
   }
 }

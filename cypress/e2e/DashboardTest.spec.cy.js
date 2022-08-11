@@ -4,16 +4,6 @@ import { EntryListAction } from '../../dist/actions/EntryListAction'
 import { DashboardAction } from '../../dist/actions/DashboardAction'
 
 
-let url = Cypress.config('baseUrl')
-let HOME = "home";
-
-
-function goHome() {
-  cy.intercept('GET', '**/lancamentos/').as(HOME)
-  cy.visit(url)
-  cy.wait(`@${HOME}`, { timeout: 120000 })
-}
-
 
 describe('Dashboard test', () => {
 
@@ -22,7 +12,7 @@ describe('Dashboard test', () => {
     var entryList = null;
 
     it('Accessing home', () => {
-      goHome();
+      cy.goHome();
     })
 
     it('Opening dashboard', () => {
