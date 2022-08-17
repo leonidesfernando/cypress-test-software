@@ -25,10 +25,13 @@ export class EntryAction {
   private btnCancel!: Selector;
   
   @ById('tipoLancamento1')
-  private radioEntry !: Selector;
+  private radioIncome !: Selector;
 
   @ById('tipoLancamento2')
   private radioSpent !: Selector;
+
+  @ById('tipoLancamento3')
+  private radioTransf !: Selector;
 
 
   public and(): EntryAction {
@@ -39,27 +42,44 @@ export class EntryAction {
     return this;
   }
 
-  public saveEntry(description: string, date: string, value: string, category:string) {
+  public saveEntry(description: string, date: string, value: string, category: string, typeEntry: string) {
 
 
-    this.fillData(description, date, value, category);
+    this.fillData(description, date, value, category, typeEntry);
     this.btnSave.click();
   }
 
-  public trySaveWithoutDescription(date: string, value: string, category: string){
+  public trySaveWithoutDescription(date: string, value: string, category: string, typeEntry: string){
 
-    this.saveEntry('', date, value, category)
+    this.saveEntry('', date, value, category, typeEntry)
     cy.get('.alert').should('contain', 'A descrição deve ser informada');
     this.btnCancel.click();
   }
 
-  private fillData(description: string, date: string, value: string, category: string) {
+  private fillData(description: string, date: string, value: string, category: string, typeEntry: string) {
     this.fillDescription(description);
     this.inputDate.type(date);
     this.inputDescription.click();
     this.inputAmount.type(value);
+    this.selectTypeEntry(typeEntry)
     this.selectCategory.select(category)
   }
+
+  private selectTypeEntry(typeEntry: string) {
+    switch(typeEntry){
+      case 'TRANSF':
+        this.radioTransf.click();
+        break;
+      case 'RENDA':
+        this.radioIncome.click();
+        break;
+      case 'DESPESA':
+        this.radioSpent.click();
+        break;
+    }
+  }
+
+
 
   private fillDescription(description: string) {
     this.inputDescription.clear();
