@@ -2,10 +2,19 @@
 
 import { EntryListAction } from '../../dist/actions/EntryListAction'
 import { DashboardAction } from '../../dist/actions/DashboardAction'
+import {LoadConfigData} from '../../dist/utils/LoadConfigData'
 
-
+var config = null;
 
 describe('Dashboard test', () => {
+
+  before(() =>{
+    cy.log(`Loading configurations from configurations.json`)
+    cy.fixture('configuration.json').then(configData => {
+      config = LoadConfigData.loadData(configData)
+      expect(config).not.null
+    })
+  })
 
   beforeEach(() => {
     Cypress.Cookies.defaults({
@@ -19,7 +28,7 @@ describe('Dashboard test', () => {
     var entryList = null;
 
     it('Accessing home', () => {
-      cy.login('user', 'a');
+      cy.login(config.getUser().getUsername(), config.getUser().getPassword());
     })
 
     it('Opening dashboard', () => {

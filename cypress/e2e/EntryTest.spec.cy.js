@@ -2,48 +2,20 @@
 
 import { EntryListAction } from '../../dist/actions/EntryListAction'
 import { DataGen } from "../../dist/utils/DataGen";
+import {LoadConfigData} from '../../dist/utils/LoadConfigData'
 
-
-let CATEGORIES = ['ALIMENTACAO', 'SALARIO', 'LAZER'
-                  , 'TELEFONE_INTERNET', 'CARRO', 'EMPRESTIMO'
-                  , 'INVESTIMENTOS', 'OUTROS']
-
-let tiposLancamento = new Map();
-tiposLancamento.set(['INVESTIMENTOS','OUTROS'],['TRANSF']);
-tiposLancamento.set(['SALARIO', 'OUTROS'], ['RENDA']);
-tiposLancamento.set(CATEGORIES.filter(f => f != 'INVESTIMENTOS' || f != 'SALARIO'), ['DESPESA']);
-
-console.log(tiposLancamento)
-/*-----------------------------------------------
- *  # Ordinay functions
- -------------------------------------------------*/
-function getCategory(){
-  return getAny(CATEGORIES);
-}
-
-function getTipoLancamento(category){
-
-  for(const [key,value] of tiposLancamento){
-    
-    if (key.indexOf(category) >= 0) {
-      return getAny(value);
-    }
-  }
-  throw Error("Does not exists 'TipoLancamento' for this category " + category);
-}
-
-
-function getAny(list){
-  var index = DataGen.numberByRange(list.length);
-  if(index == list.length){
-    index--;
-  }
-  return list[index]
-}
-
+var config = null;
 
 
 describe('Entry CRUD', () => {
+
+  before(() =>{
+    cy.log(`Loading configurations from configurations.json`)
+    cy.fixture('configuration.json').then(configData => {
+      config = LoadConfigData.loadData(configData)
+      expect(config).not.null
+    })
+  })
 
   beforeEach(() => {
     Cypress.Cookies.defaults({
@@ -53,7 +25,7 @@ describe('Entry CRUD', () => {
 
 
   it('Login', () => {
-    cy.login('user', 'a');
+    cy.login(config.getUser().getUsername(), config.getUser().getPassword());
   })
 
   context('CRUD context - Create a new entry, find and edit, find and remove ', () => {
@@ -61,8 +33,8 @@ describe('Entry CRUD', () => {
     let date = DataGen.strDateCurrentMonth();
     let description = `${DataGen.productName()} on ${date}`;
     let value = DataGen.moneyValue();
-    let category = getCategory();
-    let typeEntry = getTipoLancamento(category);
+    let category = DataGen.getCategory();
+    let typeEntry = DataGen.getTipoLancamento(category);
 
     let entryList = new EntryListAction();
 
@@ -109,8 +81,8 @@ describe('Entry CRUD', () => {
 
     let value = DataGen.moneyValue();
     let date = DataGen.strDateCurrentMonth();
-    let newCategory = getCategory();
-    let newTypeEntry = getTipoLancamento(newCategory);
+    let newCategory = DataGen.getCategory();
+    let newTypeEntry = DataGen.getTipoLancamento(newCategory);
 
     let entryList = new EntryListAction();
     entryList.newEntry()

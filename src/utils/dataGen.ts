@@ -1,6 +1,31 @@
 import * as genData from "@faker-js/faker";
 
+let CATEGORIES:string[] = ['ALIMENTACAO', 'SALARIO', 'LAZER'
+                  , 'TELEFONE_INTERNET', 'CARRO', 'EMPRESTIMO'
+                  , 'INVESTIMENTOS', 'OUTROS']
+
+let tiposLancamento = new Map();
+tiposLancamento.set(['INVESTIMENTOS','OUTROS'],['TRANSF']);
+tiposLancamento.set(['SALARIO', 'OUTROS'], ['RENDA']);
+tiposLancamento.set(CATEGORIES.filter(c => c != 'INVESTIMENTOS' && c != 'SALARIO'), ['DESPESA']);
+
+
 export const DataGen = {
+
+  getCategory(){
+    return getAny(CATEGORIES);
+  },
+
+  getTipoLancamento(category: string){
+    for(const [key,value] of tiposLancamento){
+      
+      if (key.indexOf(category) >= 0) {
+        return getAny(value);
+      }
+    }
+    throw Error("Does not exists 'TipoLancamento' for this category " + category);
+  },
+
   productName(): string {
     return `Cypress: ${genData.faker.commerce.product()}`;
   },
@@ -26,6 +51,15 @@ export const DataGen = {
     return Math.floor(Math.random() * max)
   }
 };
+
+
+function getAny(list: string[]){
+  var index = DataGen.numberByRange(list.length);
+  if(index == list.length){
+    index--;
+  }
+  return list[index]
+}
 
 function getDayByMonth(month: number) {
   var months31Days = [1, 3, 5, 7, 8, 10, 12];
