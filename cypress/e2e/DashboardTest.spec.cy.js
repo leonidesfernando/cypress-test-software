@@ -7,12 +7,19 @@ import { DashboardAction } from '../../dist/actions/DashboardAction'
 
 describe('Dashboard test', () => {
 
+  beforeEach(() => {
+    Cypress.Cookies.defaults({
+      preserve: (cookie) => true
+    })
+  })
+
+
   context('Dashboard validations', () => {
 
     var entryList = null;
 
     it('Accessing home', () => {
-      cy.goHome();
+      cy.login('user', 'a');
     })
 
     it('Opening dashboard', () => {
@@ -26,5 +33,10 @@ describe('Dashboard test', () => {
     })
   })
 
+  context('Logout context', () => {
+    it('Logout', () => {
+      cy.logout();
+    })
+  })
 
 })

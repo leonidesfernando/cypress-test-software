@@ -27,6 +27,31 @@
 let url = Cypress.config('baseUrl')
 let HOME = "home";
 
+
+Cypress.Commands.add('login', (user, password) => {
+
+  cy.intercept('GET', '**/lancamentos/').as(HOME)
+  cy.visit(url)
+  cy.get('#user').type(user)
+  cy.get('#password').type(password).type('{enter}')
+  cy.wait(`@${HOME}`)
+  cy.get('#logout').contains('Logout')
+  cy.url().should('contain', '/lancamentos')
+
+})
+
+
+Cypress.Commands.add('logout', () => {
+
+  let LOGIN = 'login'
+  cy.intercept('GET', '**/login').as(LOGIN)
+  cy.get('#logout').click()
+  cy.wait(`@${LOGIN}`)
+  cy.url().should('contain', '/login')
+})
+
+
+
 Cypress.Commands.add('goHome', () => {
   
   cy.intercept('GET', '**/lancamentos/').as(HOME)

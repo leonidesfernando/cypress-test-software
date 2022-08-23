@@ -42,15 +42,21 @@ function getAny(list){
 }
 
 
-beforeEach(() =>{
-  cy.goHome();
-})
-
 
 describe('Entry CRUD', () => {
 
+  beforeEach(() => {
+    Cypress.Cookies.defaults({
+      preserve: (cookie) => true
+    })
+  })
 
-  context('CRUD - Create a new entry, find and edit, find and remove ', () => {
+
+  it('Login', () => {
+    cy.login('user', 'a');
+  })
+
+  context('CRUD context - Create a new entry, find and edit, find and remove ', () => {
 
     let date = DataGen.strDateCurrentMonth();
     let description = `${DataGen.productName()} on ${date}`;
@@ -89,7 +95,7 @@ describe('Entry CRUD', () => {
         entryList.findEntry(editedDescription)
       })
 
-      it(`Removind the edited entry: ${editedDescription}`, () =>{
+      it(`Removing the edited entry: ${editedDescription}`, () =>{
 
         entryList.findEntry(editedDescription);
         entryList.removeFirstEntry(editedDescription);
@@ -111,5 +117,11 @@ describe('Entry CRUD', () => {
       .and()
       .trySaveWithoutDescription(date, value, newCategory, newTypeEntry);
   })
-  
+
+  context('Logout context', () => {
+    it('Logout', () => {
+      cy.logout();
+    })
+  })
+
 })
