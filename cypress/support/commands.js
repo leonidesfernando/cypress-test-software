@@ -37,7 +37,14 @@ Cypress.Commands.add('login', (user, password) => {
   cy.wait(`@${HOME}`)
   cy.get('#logout').contains('Logout')
   cy.url().should('contain', '/lancamentos')
+})
 
+Cypress.Commands.add('loginFail', (user, password) => {
+
+  cy.visit(url)
+  cy.get('#user').type(user)
+  cy.get('#password').type(password).type('{enter}')
+  cy.get('.text-danger').should('contain.text', 'Bad credentials')
 })
 
 

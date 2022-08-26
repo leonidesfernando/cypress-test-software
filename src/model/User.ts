@@ -17,4 +17,12 @@ export class User{
     public getPassword(): string{
         return this.password;
     }
+
+    public getWrongPassword(): string{
+        return (Math.random()).toString(36).substring(8)
+    }
+
+    public getWrongUsername(): string{
+        return (Math.random()).toString(36).replace(/[^a-z]+/g,'');
+    }
 }
