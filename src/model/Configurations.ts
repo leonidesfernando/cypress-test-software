@@ -11,3 +11,4 @@ export class Configurations{
         return this.user;
     }
 }
+

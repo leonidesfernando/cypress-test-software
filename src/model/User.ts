@@ -6,6 +6,7 @@ export class User{
     constructor(username:string, password:string){
         expect(username).not.empty
         expect(password).not.empty
+
         this.username = username;
         this.password = password;
     }

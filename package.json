@@ -20,13 +20,17 @@
   "author": "Leonides Fernando de Oliveira",
   "license": "MIT",
   "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^12.2.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.1.3",
     "@faker-js/faker": "^7.3.0",
-    "cypress": "^10.4.0",
-    "cypress-selectors": "^1.0.2"
+    "cypress": "^10.7.0",
+    "cypress-selectors": "^1.0.2",
+    "esbuild": "^0.15.7"
   },
   "dependencies": {
+    "cosmiconfig": "^7.0.1",
     "cypress-multi-reporters": "^1.6.1",
-    "cypress-parallel": "^0.9.1",
+    "cypress-parallel": "^0.1.8",
     "rimraf": "^3.0.2"
   }
 }
