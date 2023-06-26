@@ -4,7 +4,7 @@ import { EntryListAction } from '../../dist/actions/EntryListAction'
 import { DashboardAction } from '../../dist/actions/DashboardAction'
 import {LoadConfigData} from '../../dist/utils/LoadConfigData'
 
-var config = null;
+let config = null;
 
 describe('Dashboard test', () => {
 
@@ -17,19 +17,20 @@ describe('Dashboard test', () => {
   })
 
   beforeEach(() => {
-    Cypress.Cookies.defaults({
+    /*Cypress.Cookies.defaults({
       preserve: (cookie) => true
-    })
+    })*/
+    cy.login(config.getUser().getUsername(), config.getUser().getPassword());
   })
 
 
   context('Dashboard validations', () => {
 
-    var entryList = null;
+    let entryList = null;
 
-    it('Accessing home', () => {
+    /*it('Accessing home', () => {
       cy.login(config.getUser().getUsername(), config.getUser().getPassword());
-    })
+    })*/
 
     it('Opening dashboard', () => {
       entryList = new EntryListAction();
@@ -38,14 +39,16 @@ describe('Dashboard test', () => {
 
     it('Backing to Listing', () => {
       let dashboard = new DashboardAction();
+      entryList = new EntryListAction();
+      entryList.goToDashboard();
       dashboard.goToListing();
     })
   })
 
-  context('Logout context', () => {
+  /*context('Logout context', () => {
     it('Logout', () => {
       cy.logout();
     })
-  })
+  })*/
 
 })

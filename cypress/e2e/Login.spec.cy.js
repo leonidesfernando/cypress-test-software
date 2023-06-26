@@ -3,11 +3,15 @@
 
 import {LoadConfigData} from '../../dist/utils/LoadConfigData'
 
-var config = null;
+let config = null;
+
+
+let url = Cypress.config('baseUrl')
 
 describe('Login test', () => {
 
-  before(() =>{
+  before(async ()=>{
+    await cy.clearCookies();
     cy.log(`Loading configurations from configurations.json`)
     cy.fixture('configuration.json').then(configData => {
       config = LoadConfigData.loadData(configData)
@@ -16,9 +20,10 @@ describe('Login test', () => {
   })
 
   beforeEach(() => {
-    Cypress.Cookies.defaults({
+    /*Cypress.Cookies.defaults({
       preserve: (cookie) => true
-    })
+    })*/
+    cy.visit(url)
   })
 
   context('Login failed', () => {

@@ -4,7 +4,7 @@ import { EntryListAction } from '../../dist/actions/EntryListAction'
 import { DataGen } from "../../dist/utils/DataGen";
 import {LoadConfigData} from '../../dist/utils/LoadConfigData'
 
-var config = null;
+let config = null;
 
 
 describe('Entry CRUD', () => {
@@ -18,15 +18,16 @@ describe('Entry CRUD', () => {
   })
 
   beforeEach(() => {
-    Cypress.Cookies.defaults({
+    /*Cypress.Cookies.defaults({
       preserve: (cookie) => true
-    })
-  })
-
-
-  it('Login', () => {
+    })*/
     cy.login(config.getUser().getUsername(), config.getUser().getPassword());
   })
+
+
+  /*it('Login', () => {
+    cy.login(config.getUser().getUsername(), config.getUser().getPassword());
+  }) */
 
   context('CRUD context - Create a new entry, find and edit, find and remove ', () => {
 

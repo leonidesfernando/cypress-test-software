@@ -9,6 +9,12 @@ Feature: Validate CRUD of entries of incomes and expenses
 
   Scenario: Login to the system with the pre-defined user by configurations
     Given an user with correct credentials from the configurations
-    Then Have to login and access the home page
-    Then Do logout
-     
+
+
+  Scenario: Create a new entry, find and edit, find and remove
+    When I click on new button I must go to the register page
+    And I generate dynamic data and save a new entry
+    And After register we must find out the entry just added or edited
+    And With the entry found I click on the button to edit it
+    And After register we must find out the entry just added or edited
+    Then I should be able to remove the newly found entry

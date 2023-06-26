@@ -10,7 +10,11 @@
     "test": "test",
     "clean": "rimraf dist/*",
     "build": "npm run clean && tsc",
-    "cy:run": "cypress run"
+    "cy:run": "cypress run",
+    "cpConfig": "cp -f 'config/cypress.config.js' 'cypress.config.js'",
+    "runParallel": "npm run cpConfig & yarn build & npx cypress-parallel -s cy:run  -t 2 -d cypress/e2e/ -a '--browser=chrome'",
+    "run": "yarn build & npx cypress run --browser=chrome --config-file config/cypress.config.js",
+    "runCucumber": "yarn build & npx cypress run --browser=chrome --config-file config/cypress.cucumber.config.js"
   },
   "keywords": [
     "test",
@@ -20,17 +24,17 @@
   "author": "Leonides Fernando de Oliveira",
   "license": "MIT",
   "devDependencies": {
-    "@badeball/cypress-cucumber-preprocessor": "^12.2.0",
-    "@bahmutov/cypress-esbuild-preprocessor": "^2.1.3",
+    "@badeball/cypress-cucumber-preprocessor": "^18.0.1",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
     "@faker-js/faker": "^7.3.0",
-    "cypress": "^10.7.0",
+    "cypress": "^12.15.0",
     "cypress-selectors": "^1.0.2",
-    "esbuild": "^0.15.7"
+    "esbuild": "^0.18.6"
   },
   "dependencies": {
     "cosmiconfig": "^7.0.1",
-    "cypress-multi-reporters": "^1.6.1",
-    "cypress-parallel": "^0.1.8",
+    "cypress-multi-reporters": "^1.6.3",
+    "cypress-parallel": "^0.13.0",
     "rimraf": "^3.0.2"
   }
 }

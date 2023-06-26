@@ -8,9 +8,6 @@ const createEsbuildPlugin  = require("@badeball/cypress-cucumber-preprocessor/es
 
 
 
-
-//const cucumber = require('cypress-cucumber-preprocessor').default
-
 module.exports = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:8080/',
