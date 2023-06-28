@@ -3,7 +3,7 @@
 import { Given, Before, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import {LoadConfigData} from '../../../../dist/utils/LoadConfigData'
 import { EntryListAction } from '../../../../dist/actions/EntryListAction'
-import { EntryAction } from '../../../../dist/actions/EntryAction'
+//import { EntryAction } from '../../../../dist/actions/EntryAction'
 import { DataGen } from '../../../../dist/utils/dataGen'
 
 
@@ -28,27 +28,19 @@ Before(() =>{
     cy.visit(url)
 })
 
-/*
-beforeEach(() => {
-    //Cypress.Cookies.defaults({
-      //preserve: (cookie) => true
-    //})
-    //cy.login(config.getUser().getUsername(), config.getUser().getPassword());
-    cy.log("vindo a cada um")
-}) */
 
 Given("an user with correct credentials from the configurations", () => {
     expect(config.getUser()).not.null
+    expect(config.getUser().getUsername()).not.null
+    expect(config.getUser().getPassword()).not.null
     cy.log('validar se logou :)')
 })
 
-
-//Then('Have to login and access the home page', () => {
-    //cy.login(config.getUser().getUsername(), config.getUser().getPassword())
-//})
+When('I input a valid credentials I must log in the system', () => {
+  cy.login(config.getUser().getUsername(), config.getUser().getPassword())
+})
 
 When('I click on new button I must go to the register page', () => {
-  cy.login(config.getUser().getUsername(), config.getUser().getPassword())
   entryAction = entryList.newEntry()
 })
 
@@ -73,10 +65,10 @@ Then("I should be able to remove the newly found entry", () => {
 })
 
 
-/*
+
 Then('Do logout', () => {
   cy.logout()
-})*/
+})
 
 /*
 

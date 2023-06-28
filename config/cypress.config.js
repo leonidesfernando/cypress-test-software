@@ -10,4 +10,15 @@ module.exports = defineConfig({
     },
   },
   chromeWebSecurity: false,
+  reporter: 'mochawesome',
+  reporterOptions: {
+    reportDir: 'cypress/results',
+    overwrite: false,
+    html: false,
+    json: true,
+  },
+  reporterEnabled: 'spec, mocha-junit-reporter',
+  mochaJunitReporterReporterOptions: {
+    mochaFile: 'cypress/results/results-[hash].xml',
+  },
 });

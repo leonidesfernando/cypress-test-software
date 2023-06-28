@@ -20,9 +20,6 @@ describe('Login test', () => {
   })
 
   beforeEach(() => {
-    /*Cypress.Cookies.defaults({
-      preserve: (cookie) => true
-    })*/
     cy.visit(url)
   })
 

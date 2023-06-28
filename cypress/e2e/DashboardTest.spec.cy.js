@@ -17,9 +17,6 @@ describe('Dashboard test', () => {
   })
 
   beforeEach(() => {
-    /*Cypress.Cookies.defaults({
-      preserve: (cookie) => true
-    })*/
     cy.login(config.getUser().getUsername(), config.getUser().getPassword());
   })
 
@@ -27,10 +24,6 @@ describe('Dashboard test', () => {
   context('Dashboard validations', () => {
 
     let entryList = null;
-
-    /*it('Accessing home', () => {
-      cy.login(config.getUser().getUsername(), config.getUser().getPassword());
-    })*/
 
     it('Opening dashboard', () => {
       entryList = new EntryListAction();
@@ -45,10 +38,10 @@ describe('Dashboard test', () => {
     })
   })
 
-  /*context('Logout context', () => {
+  context('Logout context', () => {
     it('Logout', () => {
       cy.logout();
     })
-  })*/
+  })
 
 })

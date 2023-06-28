@@ -7,14 +7,19 @@
     "dist"
   ],
   "scripts": {
-    "test": "test",
-    "clean": "rimraf dist/*",
+    "clean": "rimraf dist/* && npm run delete:reports",
     "build": "npm run clean && tsc",
     "cy:run": "cypress run",
+    "delete:reports": "rm mochawesome.json || true && rm runner-results/* || true && rm cypress/results/* || true && rm mochawesome-report/assets/* || true && rm mochawesome-report/* || true",
+    "report:make": "yarn build && npx cypress run --browser=chrome --config-file config/cypress.config.js --reporter mochawesome --reporter-options reportDir=cypress/results,overwrite=false,html=false,json=true",
+    "report:merge": "npx mochawesome-merge cypress/results/*.json > mochawesome.json",
+    "report:build": "npm run report:make && npm run report:merge && npx marge mochawesome.json",
+    "test:report": "npm run delete:reports && npm run report:build",
     "cpConfig": "cp -f 'config/cypress.config.js' 'cypress.config.js'",
-    "runParallel": "npm run cpConfig & yarn build & npx cypress-parallel -s cy:run  -t 2 -d cypress/e2e/ -a '--browser=chrome'",
-    "run": "yarn build & npx cypress run --browser=chrome --config-file config/cypress.config.js",
-    "runCucumber": "yarn build & npx cypress run --browser=chrome --config-file config/cypress.cucumber.config.js"
+    "test": "yarn build && npx cypress run --browser=chrome --config-file config/cypress.config.js",
+    "test:parallel": "npm run cpConfig && yarn build && npx cypress-parallel -s cy:run  -t 2 -d cypress/e2e/ -a '--browser=chrome'",
+    "delete:cucumber:reports": "rm cypress/cucumber-report/* || true",
+    "test:cucumber": " yarn build & npx cypress run --browser=chrome --config-file config/cypress.cucumber.config.js && node cucumber.cypress.report.js"
   },
   "keywords": [
     "test",
@@ -29,12 +34,29 @@
     "@faker-js/faker": "^7.3.0",
     "cypress": "^12.15.0",
     "cypress-selectors": "^1.0.2",
-    "esbuild": "^0.18.6"
+    "esbuild": "^0.18.6",
+    "mocha-junit-reporter": "^2.2.0",
+    "mochawesome": "^7.1.3",
+    "multiple-cucumber-html-reporter": "^3.4.0",
+    "prettier": "^2.8.8"
   },
   "dependencies": {
     "cosmiconfig": "^7.0.1",
     "cypress-multi-reporters": "^1.6.3",
     "cypress-parallel": "^0.13.0",
+    "dayjs": "^1.11.8",
     "rimraf": "^3.0.2"
+  },
+  "cypress-cucumber-preprocessor": {
+    "stepDefinitions": "cypress/e2e/features/step_definitions/**/*.js",
+    "json": {
+      "enabled": true,
+      "formatter": ".bin/cucumber-json-formatter",
+      "output": "cypress/cucumber-report/cucumber-report.json"
+    },
+    "messages": {
+      "enabled": true,
+      "output": "cypress/cucumber-report/cucumber-messages.ndjson"
+    }
   }
 }

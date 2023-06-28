@@ -18,17 +18,69 @@ describe('Entry CRUD', () => {
   })
 
   beforeEach(() => {
-    /*Cypress.Cookies.defaults({
-      preserve: (cookie) => true
-    })*/
     cy.login(config.getUser().getUsername(), config.getUser().getPassword());
   })
+/*
+  const Item = {
+    date: "",
+    description: "",
+    value: "",
+    category: "",
+    typeEntry: ""
+  }
+
+  const data = [];
+
+  function newItem(){
+    const item = Object.create(Item);
+    item.date = DataGen.strDateCurrentMonth();
+    item.description = `${DataGen.productName()} on ${item.date}`;
+    item.value = DataGen.moneyValue();
+    item.category = DataGen.getCategory();
+    return item;
+  }
+
+  const nItens = 2;
+  context(`CRUD - Adding ${nItens} items`, () => {
+    let entryList = new EntryListAction();
+    for(let i = 1; i <= nItens; i++){
+      it(`Adding ${i}th item`, () => {
+        const item = newItem();
+        data.push(item);
+        entryList.newEntry()
+        .and()
+        .saveEntry(item.description, item.date, item.value, item.category, item.typeEntry)
+      })
+    }
+  });
 
 
-  /*it('Login', () => {
-    cy.login(config.getUser().getUsername(), config.getUser().getPassword());
-  }) */
+  context(`CRUD - Editing and removing the entry just added`, () => {
 
+    const index = DataGen.numberByRange(data.length);
+    const item = data[index];
+    let editedDescription = item.description;
+    let entryList = new EntryListAction();
+    it(`Finding the entry just added: ${item.description}`, () => {
+      
+      entryList.findEntry(editedDescription);
+
+      editedDescription += ' Edited';
+      entryList.openFirstToEdit()
+        .saveEntry(editedDescription, item.date, item.value, item.category, item.typeEntry);
+
+      entryList.findEntry(editedDescription)
+    })
+
+    it(`Removing the edited entry: ${editedDescription}`, () =>{
+
+      entryList.findEntry(editedDescription);
+      entryList.removeFirstEntry(editedDescription);
+    })
+  })*/
+
+
+  
   context('CRUD context - Create a new entry, find and edit, find and remove ', () => {
 
     let date = DataGen.strDateCurrentMonth();
@@ -63,6 +115,7 @@ describe('Entry CRUD', () => {
 
         editedDescription += ' Edited';
         entryList.openFirstToEdit()
+          .and()
           .saveEntry(editedDescription, date, value, category, typeEntry);
 
         entryList.findEntry(editedDescription)
