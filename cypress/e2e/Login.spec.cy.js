@@ -8,7 +8,7 @@ let config = null;
 
 let url = Cypress.config('baseUrl')
 
-describe('Login test', () => {
+describe('Login test', {tags: '@smoke'},() => {
 
   before(async ()=>{
     await cy.clearCookies();

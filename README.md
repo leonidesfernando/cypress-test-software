@@ -34,7 +34,7 @@ You can run some commands or make use of some scripts to build and run, they are
 >
 >## Run
 >
-> As we have spec to run the normal way, in parallel mode and _Cucumber's_ features. For each case, we'll need some paramters to run.
+> As we have spec to run the normal way, only smoke tests, all in parallel mode or _Cucumber's_ features. For each case, we'll need some paramters to run.
 >
 > - If you desire open the Cypress and choose the project and each spec to run:
 >   - `cypress --config-file config/cypress.config.js`
@@ -47,6 +47,9 @@ You can run some commands or make use of some scripts to build and run, they are
 >
 > - if you want to run with _Cucumber_:
 >   - `npm run test:cucumber`
+>
+> - if you want to run the smoke tests(all tests with `{tags: '@smoke'}`):
+>   - `npm run test:smoke`
 >
 >## Report:
 >However, you generate html report of executions.

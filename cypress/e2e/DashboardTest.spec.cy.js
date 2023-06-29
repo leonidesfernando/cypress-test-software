@@ -6,7 +6,7 @@ import {LoadConfigData} from '../../dist/utils/LoadConfigData'
 
 let config = null;
 
-describe('Dashboard test', () => {
+describe('Dashboard test', {tags: '@smoke'}, () => {
 
   before(() =>{
     cy.log(`Loading configurations from configurations.json`)

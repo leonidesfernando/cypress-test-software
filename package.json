@@ -14,12 +14,11 @@
     "report:make": "yarn build && npx cypress run --browser=chrome --config-file config/cypress.config.js --reporter mochawesome --reporter-options reportDir=cypress/results,overwrite=false,html=false,json=true",
     "report:merge": "npx mochawesome-merge cypress/results/*.json > mochawesome.json",
     "report:build": "npm run report:make && npm run report:merge && npx marge mochawesome.json",
-    
     "cpConfig": "cp -f 'config/cypress.config.js' 'cypress.config.js'",
     "test": "yarn build && npx cypress run --browser=chrome --config-file config/cypress.config.js",
+    "test:smoke": "npm run test --env grepTags=@smoke",
     "test:parallel": "npm run cpConfig && yarn build && npx cypress-parallel -s cy:run  -t 2 -d cypress/e2e/ -a '--browser=chrome'",
     "test:cucumber": "npm run delete:cucumber:report && yarn build && npx cypress run --browser=chrome --config-file config/cypress.cucumber.config.js",
-
     "test:report": "npm run delete:reports && npm run report:build",
     "delete:cucumber:report": "del-cli --force cypress/cucumber-report/",
     "test:cucumber:report": "npm run test:cucumber && node cucumber.cypress.report.js"
@@ -34,6 +33,7 @@
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^18.0.1",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
+    "@cypress/grep": "^3.1.5",
     "@faker-js/faker": "^7.3.0",
     "cypress": "^12.15.0",
     "cypress-selectors": "^1.0.2",

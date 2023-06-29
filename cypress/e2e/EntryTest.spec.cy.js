@@ -92,7 +92,7 @@ describe('Entry CRUD', () => {
     let entryList = new EntryListAction();
 
 
-    context(`Creating a new entry: ${description}, ${category}, ${typeEntry}`, () => {
+    context(`Creating a new entry: ${description}, ${category}, ${typeEntry}`, {tags: '@smoke'},() => {
 
       it('Create valid entry', () => {
 
@@ -106,7 +106,7 @@ describe('Entry CRUD', () => {
       })
     })
 
-    context(`Editing and removing the entry just added: : ${description}, ${category}, ${typeEntry}`, () => {
+    context(`Editing and removing the entry just added: : ${description}, ${category}, ${typeEntry}`, {tags: '@smoke'},() => {
 
       let editedDescription = description;
       it(`Finding the entry just added: ${description}`, () => {
