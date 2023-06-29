@@ -10,7 +10,7 @@
     "clean": "rimraf dist/* && npm run delete:reports",
     "build": "npm run clean && tsc",
     "cy:run": "cypress run",
-    "delete:reports": "rm mochawesome.json || true && rm runner-results/* || true && rm cypress/results/* || true && rm mochawesome-report/assets/* || true && rm mochawesome-report/* || true",
+    "delete:reports": "rm mochawesome.json || true && del-cli --force runner-results && del-cli --force cypress/results/ && del-cli --force rm mochawesome-report/",
     "report:make": "yarn build && npx cypress run --browser=chrome --config-file config/cypress.config.js --reporter mochawesome --reporter-options reportDir=cypress/results,overwrite=false,html=false,json=true",
     "report:merge": "npx mochawesome-merge cypress/results/*.json > mochawesome.json",
     "report:build": "npm run report:make && npm run report:merge && npx marge mochawesome.json",
@@ -18,8 +18,8 @@
     "cpConfig": "cp -f 'config/cypress.config.js' 'cypress.config.js'",
     "test": "yarn build && npx cypress run --browser=chrome --config-file config/cypress.config.js",
     "test:parallel": "npm run cpConfig && yarn build && npx cypress-parallel -s cy:run  -t 2 -d cypress/e2e/ -a '--browser=chrome'",
-    "delete:cucumber:reports": "rm cypress/cucumber-report/* || true",
-    "test:cucumber": " yarn build & npx cypress run --browser=chrome --config-file config/cypress.cucumber.config.js && node cucumber.cypress.report.js"
+    "delete:cucumber:report": "del-cli --force cypress/cucumber-report/",
+    "test:cucumber": "npm run delete:cucumber:report && yarn build && npx cypress run --browser=chrome --config-file config/cypress.cucumber.config.js && node cucumber.cypress.report.js"
   },
   "keywords": [
     "test",
@@ -52,11 +52,11 @@
     "json": {
       "enabled": true,
       "formatter": ".bin/cucumber-json-formatter",
-      "output": "cypress/cucumber-report/cucumber-report.json"
+      "output": "cypress/cucumber-report/json/cucumber-report.json"
     },
     "messages": {
       "enabled": true,
-      "output": "cypress/cucumber-report/cucumber-messages.ndjson"
+      "output": "cypress/cucumber-report/messages/cucumber-messages.ndjson"
     }
   }
 }

@@ -106,3 +106,10 @@ dist
 
 # TernJS port file
 .tern-port
+
+
+#mocha reports
+mochawesome-report/
+results/
+cypress/cucumber-report/*
+runner-results/*
