@@ -8,13 +8,14 @@ Project to explore **[Cypress.io](https://cypress.io/)** in e2e tests and some p
 All tests were built to run against a simple web application in the [teste-software](https://github.com/leonidesfernando/teste-software) repository.
 
 ## Requeriments 
-- [NodeJS](https://nodejs.org/) 16.16.0+
+- [NodeJS](https://nodejs.org/) 18.13.0
 - [Yarn](https://yarnpkg.com/getting-started) 1.22.19+
+- NPM 8.19.3+
 - [Cypress](https://cypress.io) 12.15.0
 
 
 ## Structure
-As a JS/TS project, it makes use of NodeJS and some JS frameworks. That's why we recommend using the IDE of your preference 
+As a JS/TS project, it makes use of NodeJS _npm_ and or _yarn_ and some other JS frameworks. That's why we recommend using the IDE of your preference. 
 
 
 ### After clone the repository, add/update the project and libraries, **just once**
@@ -33,24 +34,25 @@ You can run some commands or make use of some scripts to build and run, they are
 >
 >## Run
 >
-> As we have spec with and without _Cucumber_ we'll need some paramters to run.
+> As we have spec to run the normal way, in parallel mode and _Cucumber's_ features. For each case, we'll need some paramters to run.
 >
 > - If you desire open the Cypress and choose the project and each spec to run:
 >   - `cypress --config-file config/cypress.config.js`
 >
+> - If you want to run in parallel mode:
+>   - `npm run test:parallel`
 >
 > - If you desire to run all specs without _Cucumber_:
->   - `npx cypress run --browser=chrome --headed --config-file config/cypress.config.js`
-
-
-## Scripts:
-However, you can use these scripts to make your life more comfortable
-
-- Run: `run.bat` or `run.sh`
-
-- Build/Compile & Run: 
-    - `buildAndRun.bat` or 
-    - `buildAndRun.sh` or
-    - `buildAndRunParalle.bat` or
-    - buildAndRunCucumber.bat or
-    
+>   - `npm run test`
+>
+> - if you want to run with _Cucumber_:
+>   - `npm run test:cucumber`
+>
+>## Report:
+>However, you generate html report of executions.
+>
+>For the common spec, you just need to use this script:
+>   - `npm run test:report`
+>
+>And for the cubumber features, you can use this one:
+>   - `npm run test:cucumber:report`
