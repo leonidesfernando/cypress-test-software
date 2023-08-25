@@ -7,7 +7,7 @@ import { DashboardAction } from "./DashboardAction";
 
 enum Button {
   EDIT = 'btn-primary',
-  DELETE = 'btn-danger'
+  DELETE = 'btn-warning'
 }
 
 
@@ -27,18 +27,20 @@ export class EntryListAction{
   @BySelector("a[title='Gráfico']")
   private btnDashboard !: Selector;
 
-  public newEntry(): EntryAction{
-    cy.intercept('GET', '**/lancamento/').as(this.ENTRY_PAGE_WAIT)
-    this.btnNewEntry.click()
+  public newEntry():EntryAction{
+    cy.intercept('GET', '**/lancamento/').as(this.ENTRY_PAGE_WAIT);
+    this.btnNewEntry.click();
     cy.wait(`@${this.ENTRY_PAGE_WAIT}`)
 
     return new EntryAction();
   }
 
-  public findEntry(description: string){
+  public findEntry(description: string): void{
     this.searchByDescription(description);
     let grid = this.getGrid();
-    grid.findItemAt(description, 1, 1);
+    grid.getTextItemAtLineBy(1, 'descrption').then(res => {
+      expect(description).to.be.eq(res.text())
+    });
   }
 
   public goToDashboard(){
@@ -51,9 +53,10 @@ export class EntryListAction{
   }
 
   public removeFirstEntry(description: string):void{
-    this.clickButton(Button.DELETE)
+    this.clickButton(Button.DELETE);
+    this.searchByDescription(description);
     let grid = this.getGrid();
-    grid.mustNotFindItem(description, 1, 1);
+    grid.mustNotFindItem(description, 1, 'description');
   }
 
   public openFirstToEdit(): EntryAction {

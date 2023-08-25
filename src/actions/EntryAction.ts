@@ -4,13 +4,11 @@ import { BySelector, ByXPath, Selector, ById, ByName, By } from 'cypress-selecto
 
 export class EntryAction {
 
-
   @ById('descricao')
   private inputDescription!: Selector;
 
   @ById('datepicker')
   private inputDate!: Selector;
-
 
   @ByName('valor')
   private inputAmount!: Selector;
@@ -42,8 +40,7 @@ export class EntryAction {
     return this;
   }
 
-  public saveEntry(description: string, date: string, value: string, category: string, typeEntry: string) {
-
+  public saveEntry(description: string, date: string, value: string, category: string, typeEntry: string):void {
 
     this.fillData(description, date, value, category, typeEntry);
     this.btnSave.click();
@@ -56,7 +53,7 @@ export class EntryAction {
     this.btnCancel.click();
   }
 
-  private fillData(description: string, date: string, value: string, category: string, typeEntry: string) {
+  private fillData(description: string, date: string, value: string, category: string, typeEntry: string):void {
     this.fillDescription(description);
     this.inputDate.type(date);
     this.inputDescription.click();
@@ -65,7 +62,7 @@ export class EntryAction {
     this.selectCategory.select(category)
   }
 
-  private selectTypeEntry(typeEntry: string) {
+  private selectTypeEntry(typeEntry: string):void {
     switch(typeEntry){
       case 'TRANSF':
         this.radioTransf.click();
@@ -79,9 +76,7 @@ export class EntryAction {
     }
   }
 
-
-
-  private fillDescription(description: string) {
+  private fillDescription(description: string):void {
     this.inputDescription.clear();
     if(description && (description.trim() != ''))
       this.inputDescription.type(description);

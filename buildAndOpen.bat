@@ -1,0 +1,1 @@
+yarn build & npx cypress open
