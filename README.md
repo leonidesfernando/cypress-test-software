@@ -8,9 +8,9 @@ Project to explore **[Cypress.io](https://cypress.io/)** in e2e tests and some p
 All tests were built to run against a simple web application in the [teste-software](https://github.com/leonidesfernando/teste-software) repository.
 
 ## Requeriments 
-- [NodeJS](https://nodejs.org/) 18.13.0
+- [NodeJS](https://nodejs.org/) v20.3.1
 - [Yarn](https://yarnpkg.com/getting-started) 1.22.19+
-- NPM 8.19.3+
+- NPM 9.6.7+
 - [Cypress](https://cypress.io) 12.15.0
 
 
