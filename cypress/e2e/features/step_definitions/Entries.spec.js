@@ -1,39 +1,37 @@
 /// <reference types="cypress" />
 
-import { Given, Before, When, Then } from "@badeball/cypress-cucumber-preprocessor";
-import {LoadConfigData} from '../../../../dist/utils/LoadConfigData'
+import { Given, Before, When, Then } from '@badeball/cypress-cucumber-preprocessor'
+import { LoadConfigData } from '../../../../dist/utils/LoadConfigData'
 import { EntryListAction } from '../../../../dist/actions/EntryListAction'
-//import { EntryAction } from '../../../../dist/actions/EntryAction'
+// import { EntryAction } from '../../../../dist/actions/EntryAction'
 import { DataGen } from '../../../../dist/utils/dataGen'
 
+let config
+const entryList = new EntryListAction()
+let entryAction
 
-let config;
-let entryList = new EntryListAction();
-let entryAction;
+const date = DataGen.strDateCurrentMonth()
+let description = `${DataGen.productName()} on ${date}`
+const value = DataGen.moneyValue()
+const category = DataGen.getCategory()
+const typeEntry = DataGen.getTipoLancamento(category)
 
-let date = DataGen.strDateCurrentMonth();
-let description = `${DataGen.productName()} on ${date}`;
-let value = DataGen.moneyValue();
-let category = DataGen.getCategory();
-let typeEntry = DataGen.getTipoLancamento(category);
+const url = Cypress.config('baseUrl')
 
-let url = Cypress.config('baseUrl')
-
-Before(() =>{
-    cy.log(`Loading configurations from configurations.json`)
-    cy.fixture('configuration.json').then(configData => {
-      config = LoadConfigData.loadData(configData)
-      expect(config).not.null
-    })
-    cy.visit(url)
+Before(() => {
+  cy.log('Loading configurations from configurations.json')
+  cy.fixture('configuration.json').then(configData => {
+    config = LoadConfigData.loadData(configData)
+    expect(config).not.null
+  })
+  cy.visit(url)
 })
 
-
-Given("an user with correct credentials from the configurations", () => {
-    expect(config.getUser()).not.null
-    expect(config.getUser().getUsername()).not.null
-    expect(config.getUser().getPassword()).not.null
-    cy.log('validar se logou :)')
+Given('an user with correct credentials from the configurations', () => {
+  expect(config.getUser()).not.null
+  expect(config.getUser().getUsername()).not.null
+  expect(config.getUser().getPassword()).not.null
+  cy.log('validar se logou :)')
 })
 
 When('I input a valid credentials I must log in the system', () => {
@@ -44,7 +42,7 @@ When('I click on new button I must go to the register page', () => {
   entryAction = entryList.newEntry()
 })
 
-//https://filiphric.com/cucumber-in-cypress-a-step-by-step-guide
+// https://filiphric.com/cucumber-in-cypress-a-step-by-step-guide
 
 Then('I generate dynamic data and save a new entry', () => {
   entryAction.saveEntry(description, date, value, category, typeEntry)
@@ -55,16 +53,14 @@ Then('After register we must find out the entry just added or edited', () => {
 })
 
 Then('With the entry found I click on the button to edit it', () => {
-  description += ' Edited';
+  description += ' Edited'
   entryList.openFirstToEdit()
-    .saveEntry(description, date, value, category, typeEntry);
+    .saveEntry(description, date, value, category, typeEntry)
 })
 
-Then("I should be able to remove the newly found entry", () => {
-  entryList.removeFirstEntry(description);
+Then('I should be able to remove the newly found entry', () => {
+  entryList.removeFirstEntry(description)
 })
-
-
 
 Then('Do logout', () => {
   cy.logout()
@@ -82,7 +78,6 @@ Then('Do logout', () => {
 
     let entryList = new EntryListAction();
 
-
     context(`Creating a new entry: ${description}, ${category}, ${typeEntry}`, () => {
 
       it('Create valid entry', () => {
@@ -91,7 +86,7 @@ Then('Do logout', () => {
             .and()
           .saveEntry(description, date, value, category, typeEntry)
         })
-        
+
         it('Finding the entry just added', () => {
           entryList.findEntry(description)
       })
@@ -101,7 +96,7 @@ Then('Do logout', () => {
 
       let editedDescription = description;
       it(`Finding the entry just added: ${description}`, () => {
-        
+
         entryList.findEntry(editedDescription);
 
         editedDescription += ' Edited';
@@ -117,8 +112,7 @@ Then('Do logout', () => {
         entryList.removeFirstEntry(editedDescription);
       })
     })
-  
-  })
 
+  })
 
 */

@@ -17,7 +17,7 @@ export class GridUI{
     return cy.get(`td#${item}${line}`);
   }
   
-  public mustNotFindItem(item: string, line:number, columnName: string){
+  public mustNotFindItem(){
     this.mustBeEmpty();
   }
 

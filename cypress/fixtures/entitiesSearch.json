@@ -1,0 +1,36 @@
+{
+  "totalSaida": "R$ 71,00",
+  "totalEntrada": "R$ 0,00",
+  "totalGeralSaida": "R$ 8.911,15",
+  "totalGeralEntrada": "R$ 3.536,02",
+  "lancamentos": [
+    {
+      "id": 228,
+      "descricao": "Cypress: Pizza on 01/09/2023 in chrome Edited",
+      "valor": "R$ 1,00",
+      "dataLancamento": "01/09/2023",
+      "tipoLancamento": "Despesa",
+      "categoria": "Alimentação"
+    },
+    {
+      "id": 218,
+      "descricao": "Cypress: Pizza on 15/09/2023 in chrome",
+      "valor": "R$ 41,00",
+      "dataLancamento": "15/09/2023",
+      "tipoLancamento": "Transf",
+      "categoria": "Investimentos"
+    },
+    {
+      "id": 205,
+      "descricao": "PlayWright: Pizza firefox on 25/09/2023",
+      "valor": "R$ 70,00",
+      "dataLancamento": "25/09/2023",
+      "tipoLancamento": "Despesa",
+      "categoria": "Telefone & Internet"
+    }
+  ],
+  "p": 1,
+  "tamanhoPagina": 3,
+  "totalRegistros": 3,
+  "itemBusca": "pizza"
+}

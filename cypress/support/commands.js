@@ -24,12 +24,10 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-let url = Cypress.config('baseUrl')
-let HOME = "home";
-
+const url = Cypress.config('baseUrl')
+const HOME = 'home'
 
 Cypress.Commands.add('login', (user, password) => {
-
   cy.intercept('GET', '**/lancamentos/').as(HOME)
   cy.visit(url)
   cy.get('#user').type(user)
@@ -40,29 +38,22 @@ Cypress.Commands.add('login', (user, password) => {
 })
 
 Cypress.Commands.add('loginFail', (user, password) => {
-
   cy.visit(url)
   cy.get('#user').type(user)
   cy.get('#password').type(password).type('{enter}')
   cy.get('.text-danger').should('contain.text', 'Bad credentials')
 })
 
-
 Cypress.Commands.add('logout', () => {
-
-  let LOGIN = 'login'
+  const LOGIN = 'login'
   cy.intercept('GET', '**/login').as(LOGIN)
   cy.get('#logout').click()
   cy.wait(`@${LOGIN}`)
   cy.url().should('contain', '/login')
 })
 
-
-
 Cypress.Commands.add('goHome', () => {
-  
   cy.intercept('GET', '**/lancamentos/').as(HOME)
   cy.visit(url)
   cy.wait(`@${HOME}`, { timeout: 120000 })
- 
 })

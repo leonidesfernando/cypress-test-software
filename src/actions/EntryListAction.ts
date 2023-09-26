@@ -43,6 +43,12 @@ export class EntryListAction{
     });
   }
 
+  public notFindEntry(description: string): void {
+    this.searchByDescription(description);
+    let grid = this.getGrid();
+    grid.mustNotFindItem();
+  }
+
   public goToDashboard(){
 
     cy.intercept('GET', '**/dashboard').as(this.DASHBOARD)
@@ -56,7 +62,7 @@ export class EntryListAction{
     this.clickButton(Button.DELETE);
     this.searchByDescription(description);
     let grid = this.getGrid();
-    grid.mustNotFindItem(description, 1, 'description');
+    grid.mustNotFindItem();
   }
 
   public openFirstToEdit(): EntryAction {
@@ -77,7 +83,7 @@ export class EntryListAction{
   private searchByDescription(description: string){
     expect(description).not.be.null;
     cy.intercept('POST', '**/buscaLancamentos').as(this.SEARCH_WAIT)
-    this.inputSearch.clear().type(description).type('{enter}')
+    this.inputSearch.clear().type(`${description}{enter}`)
     cy.wait(`@${this.SEARCH_WAIT}`)
   }
 }

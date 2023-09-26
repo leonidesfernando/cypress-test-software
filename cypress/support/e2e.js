@@ -22,14 +22,12 @@ import './commands'
 const registerCypressGrep = require('@cypress/grep')
 registerCypressGrep()
 
-
 Cypress.on('uncaught:exception', (err, runnable) => {
   // returning false here prevents Cypress from
   // failing the test
 
   console.log('erro: ' + err.message)
 
-  if (err.message.includes( "Bootstrap's JavaScript requires jQuery"))
-    return false
-  return true 
+  if (err.message.includes("Bootstrap's JavaScript requires jQuery")) { return false }
+  return true
 })

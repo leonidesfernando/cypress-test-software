@@ -1,31 +1,31 @@
-const { defineConfig } = require("cypress");
+const { defineConfig } = require('cypress')
 
-const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
+const createBundler = require('@bahmutov/cypress-esbuild-preprocessor')
 
-const addCucumberPreprocessorPlugin = require("@badeball/cypress-cucumber-preprocessor").addCucumberPreprocessorPlugin;
+const addCucumberPreprocessorPlugin = require('@badeball/cypress-cucumber-preprocessor').addCucumberPreprocessorPlugin
 
-const afterRunHandler = require("@badeball/cypress-cucumber-preprocessor").afterRunHandler;
+const afterRunHandler = require('@badeball/cypress-cucumber-preprocessor').afterRunHandler
 
-const createEsbuildPlugin = require("@badeball/cypress-cucumber-preprocessor/esbuild").createEsbuildPlugin;
-const fs = require('fs');
+const createEsbuildPlugin = require('@badeball/cypress-cucumber-preprocessor/esbuild').createEsbuildPlugin
+const fs = require('fs')
 
 module.exports = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:8080/',
     video: false,
     specPattern: 'cypress/e2e/features/**/*.feature',
-    async setupNodeEvents(on, config) {
+    async setupNodeEvents (on, config) {
       // implement node event listeners here
       const bundler = createBundler({
         plugins: [createEsbuildPlugin(config)]
-      });
+      })
 
-      on('file:preprocessor', bundler);
-      await addCucumberPreprocessorPlugin(on, config);
+      on('file:preprocessor', bundler)
+      await addCucumberPreprocessorPlugin(on, config)
 
       on('after:run', async (results) => {
         if (results) {
-          await afterRunHandler(config);
+          await afterRunHandler(config)
           fs.writeFileSync(
             './../cypress/cucumber-report/results.json',
             JSON.stringify(
@@ -37,17 +37,17 @@ module.exports = defineConfig({
                 nodeVersion: results.config.resolvedNodeVersion,
                 cypressVersion: results.cypressVersion,
                 startedTestsAt: results.startedTestsAt,
-                endedTestsAt: results.endedTestsAt,
+                endedTestsAt: results.endedTestsAt
               },
               null,
-              '\t',
-            ),
-          );
+              '\t'
+            )
+          )
         }
-      });
+      })
 
-      return config;
-    },
+      return config
+    }
   },
-  chromeWebSecurity: false,
-});
+  chromeWebSecurity: false
+})
