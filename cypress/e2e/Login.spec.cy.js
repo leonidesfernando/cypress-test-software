@@ -22,11 +22,11 @@ describe('Login test', { tags: '@smoke' }, () => {
 
   context('Login failed', () => {
     it('Wrong user', () => {
-      cy.loginFail(config.getUser().getWrongUsername(), config.getUser().getPassword())
+      cy.loginFail(config.getInvalidUser().getUsername(), config.getInvalidUser().getPassword())
     })
 
     it('Wrong Password', () => {
-      cy.loginFail(config.getUser().getUsername(), config.getUser().getWrongPassword())
+      cy.loginFail(config.getUser().getUsername(), config.getInvalidUser().getPassword())
     })
   })
 
