@@ -20,28 +20,16 @@ Before(() => {
 Given('The follow credentials then', function(table){
   const loginData = table.hashes()
   for(const row of loginData ){
-    performLogin(row);
-/*
-    const user  = UserUtil.getUserByParam(config, row);
-    if(UserUtil.isValidCredentials(row)){
-      cy.login(user.getUsername(), user.getPassword());
-      cy.logout();
-    }else{
-      cy.loginFail(user.getUsername(), user.getPassword());
-    }*/
+    tryToLogin(row);
   }
 });
 
 Given('The follow credentials {string} and {string}', function (user, password) {
-
-  /*const credential = {"User": user}, "Password": password};
-  performLogin(credential);*/
   const credential = {"User": user, "Password": password};
-  performLogin(credential);
+  tryToLogin(credential);
 });
 
-function performLogin(credential){
-  console.log('peforming login')
+function tryToLogin(credential){
   const user = UserUtil.getUserByParam(config, credential);
   if (UserUtil.isValidCredentials(credential)) {
     cy.login(user.getUsername(), user.getPassword());
